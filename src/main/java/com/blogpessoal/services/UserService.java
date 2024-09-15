@@ -21,6 +21,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public void validatePublication(Users user) throws Exception {
+        System.out.println(List.of(user.getRole()));
         if(user.getRole() == Roles.USER) {
             throw new Exception("User don't have permission to perform this action");
         }
@@ -48,6 +49,10 @@ public class UserService {
 
     public List<Users> findAllUsers() {
         return this.usersRepository.findAll();
+    }
+
+    public Users findUserByEmail(String email) {
+        return (Users) this.usersRepository.findByEmail(email);
     }
 
     public Users findByID(Long id) throws Exception {

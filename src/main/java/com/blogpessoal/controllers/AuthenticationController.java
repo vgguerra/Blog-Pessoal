@@ -1,6 +1,8 @@
 package com.blogpessoal.controllers;
 
+import com.blogpessoal.configs.security.TokenService;
 import com.blogpessoal.dtos.AuthenticationDTO;
+import com.blogpessoal.dtos.LoginDTO;
 import com.blogpessoal.dtos.UserDTO;
 import com.blogpessoal.models.Users;
 import com.blogpessoal.services.AuthenticationService;
@@ -24,10 +26,17 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO authenticationDTO){
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO authenticationDTO) throws Exception {
         boolean authenticated = authenticationService.authenticateUser(authenticationDTO.email(), authenticationDTO.password());
-        if(authenticated) return ResponseEntity.ok("Login successful");
+        if(userService.findUserByEmail(authenticationDTO.email()) == null) throw new Exception("User not found!");
+
+        var token = tokenService.generateToken(this.userService.findUserByEmail(authenticationDTO.email()));
+
+        if(authenticated) return ResponseEntity.ok("Login successful. Your token is: " + new LoginDTO(token));
         else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
     }
 

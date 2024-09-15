@@ -36,5 +36,13 @@ public class PostService {
         return this.postRepository.findAll();
     }
 
+    public void deletePost(Long id) throws Exception {
+        try{
+            this.postRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Error deleting post!");
+        }
+    }
+
 }
 
