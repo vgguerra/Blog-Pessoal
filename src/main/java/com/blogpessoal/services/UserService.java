@@ -5,6 +5,8 @@ import com.blogpessoal.models.Users;
 import com.blogpessoal.models.enums.Roles;
 import com.blogpessoal.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,9 @@ public class UserService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void validatePublication(Users user) throws Exception {
         if(user.getRole() == Roles.USER) {
@@ -27,13 +32,16 @@ public class UserService {
         }
     }
 
-    public Users createUser(UserDTO user) {
+    public Users createUser(UserDTO user) throws Exception {
 
         Users newUser = new Users(user);
-        newUser.setRole(Roles.ADMIN);
+//        newUser.setRole(Roles.ADMIN);
 
-//        String passwordEnconde = new BCryptPasswordEncoder().encode(newUser.getPassword());
-//        newUser.setPassword(passwordEncode);
+//        if(this.usersRepository.findByEmail(user.email()) != null){
+//            throw new Exception("User already exists");
+//        }
+
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         this.usersRepository.save(newUser);
         return newUser;
     }
