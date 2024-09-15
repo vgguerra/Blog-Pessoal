@@ -29,8 +29,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/post").hasRole("PUBLISHER")
                         .requestMatchers(HttpMethod.POST,"/post").authenticated()
-                        .requestMatchers(HttpMethod.POST,"/post/*").hasRole("PUBLISHER")
-                        .requestMatchers(HttpMethod.POST,"/post/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/post/*").hasRole("PUBLISHER")
+                        .requestMatchers(HttpMethod.DELETE,"/post/*").authenticated()
                         .requestMatchers(HttpMethod.POST,"/category/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/category/*").authenticated()
                         .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
@@ -41,6 +41,8 @@ public class SecurityConfigurations {
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
