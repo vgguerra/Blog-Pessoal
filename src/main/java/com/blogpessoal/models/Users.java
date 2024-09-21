@@ -75,4 +75,5 @@ public class Users implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
     }
+
 }

@@ -17,8 +17,8 @@ public class CategoryService {
     @Autowired
     private CategoriesRepository categoriesRepository;
 
-    public Categories newCategory(CategoryDTO categoryDTO, Long userId) throws Exception {
-        this.userService.validateAdmin(this.userService.findByID(userId));
+    public Categories newCategory(CategoryDTO categoryDTO) throws Exception {
+//        this.userService.validateAdmin(this.userService.findByID(userId));
         Categories newCategory = new Categories(categoryDTO);
         this.categoriesRepository.save(newCategory);
         return newCategory;

@@ -36,11 +36,10 @@ public class UserService {
     public Users createUser(UserDTO user) throws Exception {
 
         Users newUser = new Users(user);
-//        newUser.setRole(Roles.ADMIN);
 
-//        if(this.usersRepository.findByEmail(user.email()) != null){
-//            throw new Exception("User already exists");
-//        }
+        if(this.usersRepository.findByEmail(user.email()) != null){
+            throw new Exception("User already exists");
+        }
 
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         this.usersRepository.save(newUser);

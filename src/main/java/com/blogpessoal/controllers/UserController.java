@@ -17,12 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<Users> createUser(@RequestBody UserDTO userDTO) throws Exception {
-        Users newUser = userService.createUser(userDTO);
-        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-    }
-
     @GetMapping
     public ResponseEntity<List<Users>> getAllUsers(){
         List<Users> users = this.userService.findAllUsers();

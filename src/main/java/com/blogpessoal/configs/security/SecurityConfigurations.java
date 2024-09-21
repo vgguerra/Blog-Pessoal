@@ -25,28 +25,19 @@ public class SecurityConfigurations {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/post").hasRole("PUBLISHER")
-                        .requestMatchers(HttpMethod.POST,"/post").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/auth/*").permitAll()  // Permitir acesso sem autenticação
+                        .requestMatchers(HttpMethod.POST,"/post").hasRole("PUBLISHER") // Role específica já inclui authenticated
                         .requestMatchers(HttpMethod.DELETE,"/post/*").hasRole("PUBLISHER")
-                        .requestMatchers(HttpMethod.DELETE,"/post/*").authenticated()
-                        .requestMatchers(HttpMethod.POST,"/category/").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/category/*").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/category").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/users").authenticated()
                         .requestMatchers(HttpMethod.GET,"/users/*").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/users/*").authenticated()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated())  // Qualquer outra rota requer autenticação
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
