@@ -5,16 +5,15 @@ import com.blogpessoal.dtos.AuthenticationDTO;
 import com.blogpessoal.dtos.LoginDTO;
 import com.blogpessoal.dtos.UserDTO;
 import com.blogpessoal.models.Users;
+import com.blogpessoal.models.enums.Roles;
 import com.blogpessoal.services.AuthenticationService;
 import com.blogpessoal.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -40,10 +39,21 @@ public class AuthenticationController {
         else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
     }
 
+//    @PostMapping("/register")
+//    public ResponseEntity register(@RequestBody @Valid UserDTO userDTO) throws Exception {
+//        this.userService.createUser(userDTO);
+//        return ResponseEntity.ok("User registered successfully");
+//    }
+
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid UserDTO userDTO) throws Exception {
-        this.userService.createUser(userDTO);
-        return ResponseEntity.ok("User registered successfully");
+    public String registerUser(@RequestParam String email,@RequestParam String username,@RequestParam String password,@RequestParam String phone,Model model) throws Exception {
+
+        UserDTO userDTO = new UserDTO(username,password,email,phone, Roles.USER);
+
+        userService.createUser(userDTO);
+
+        return "redirect:/auth/login";
     }
+
 
 }

@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../static/style.css"> <!-- Linkando o CSS -->
+    <link rel="stylesheet" href="/login.css">
 </head>
 <body>
 <div class="login-container">
     <h2>Login</h2>
-    <form action="/login" method="post"> <!-- O Spring Security vai mapear para /login -->
+    <!-- Exibir a mensagem de erro, se existir -->
+    <div th:if="${errorMessage}" style="color: red;">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <!-- Usar Thymeleaf para vincular o formulário à rota de processamento -->
+    <form th:action="@{/auth/login}" method="post">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>

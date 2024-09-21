@@ -1,0 +1,66 @@
+/* Estilos Globais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container do Registro */
+.register-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Título */
+.register-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Grupos de Formulários */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Rótulos */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: center; /* Centraliza o texto do rótulo */
+}
+
+/* Campos de Entrada */
+.form-group input {
+    width: 90%; /* Define uma largura de 90% para centralizar */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 0 auto; /* Centraliza o campo de entrada */
+    display: block; /* Faz com que o campo de entrada seja um bloco */
+}
+
+/* Botão de Registro */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745; /* Verde */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #218838; /* Verde mais escuro */
+}
+
+/* Mensagem de Erro */
+div[style*="color: red;"] {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
